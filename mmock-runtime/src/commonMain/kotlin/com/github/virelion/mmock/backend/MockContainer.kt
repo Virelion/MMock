@@ -31,7 +31,7 @@ class MockContainer(
                                     )
                             )
                         }
-                        ?.invoke(args) as? T
+                        ?.invoke() as? T
                         ?: throw NoMethodStubException()
             }
         }

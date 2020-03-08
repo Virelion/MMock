@@ -73,7 +73,7 @@ class MMockContext: VerificationContext {
         val objectMock = requireNotNull(invocation.objectMock)
         val name = requireNotNull(invocation.name)
 
-        objectMock.mocks.regular[name].add(FunctionMock(invocation.args, body = { value }))
+        objectMock.mocks.regular[name].add(FunctionMock(invocation.args, value))
     }
 }
 
