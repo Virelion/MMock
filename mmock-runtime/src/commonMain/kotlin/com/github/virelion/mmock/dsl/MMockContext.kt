@@ -20,7 +20,7 @@ class MMockContext: VerificationContext {
 
     override var recordingStack: MutableList<StackElement>? = null
 
-    private fun <R> record(block: MMockContext.() -> R): List<Invocation<R>> {
+    private suspend fun <R> record(block:  suspend MMockContext.() -> R): List<Invocation<R>> {
         try {
             state = State.RECORDING
             val finalEventStack = mutableListOf<StackElement>()
@@ -47,7 +47,7 @@ class MMockContext: VerificationContext {
     }
 
     @MMockDSL
-    fun <R> every(block: MMockContext.() -> R): StubbingContext<R> {
+    suspend fun <R> every(block: suspend MMockContext.() -> R): StubbingContext<R> {
         val recording = record(block)
         if(recording.isEmpty()) throw MMockStubbingException("""No methods recorded in "every" block""")
         if(recording.size > 1) throw MMockStubbingException("""Multiple invocations in "every" block""")
@@ -55,7 +55,7 @@ class MMockContext: VerificationContext {
     }
 
     @MMockDSL
-    fun verify(block: VerificationContext.() -> Unit) {
+    suspend fun verify(block: suspend VerificationContext.() -> Unit) {
         val invocations = record(block)
         invocations.forEach { invocation ->
             val invocationAmount = invocationLogRecord.count {
@@ -73,7 +73,7 @@ class MMockContext: VerificationContext {
         val objectMock = requireNotNull(invocation.objectMock)
         val name = requireNotNull(invocation.name)
 
-        objectMock.mocks.regular[name].add(FunctionMock(invocation.args) { value })
+        objectMock.mocks.regular[name].add(FunctionMock(invocation.args, body = { value }))
     }
 }
 

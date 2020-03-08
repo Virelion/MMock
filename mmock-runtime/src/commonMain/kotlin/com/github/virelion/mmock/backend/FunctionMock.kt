@@ -5,6 +5,6 @@ class FunctionMock<R>(
         val body: ((Array<out Any?>) -> R)
 ) {
     operator fun invoke(vararg args: Any?): R {
-        return body(args)
+        return body.invoke(args)
     }
 }

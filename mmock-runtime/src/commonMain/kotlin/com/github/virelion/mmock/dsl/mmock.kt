@@ -1,5 +1,6 @@
 package com.github.virelion.mmock.dsl
 
+import com.github.virelion.mmock.backend.runSuspend
 import com.github.virelion.mmock.samples.ExampleInterface
 import com.github.virelion.mmock.samples.ExampleMock
 
@@ -11,8 +12,9 @@ inline fun <reified T> MMockContext.mmock(): T {
     } as T
 }
 
-fun withMMock(block: MMockContext.() -> Unit) {
+fun withMMock(block: suspend MMockContext.() -> Unit): Unit = runSuspend {
     MMockContext().apply {
         block()
     }
+    Unit
 }
