@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 plugins {
     kotlin("multiplatform")
     `maven-publish`
@@ -81,6 +83,28 @@ kotlin {
 
         val iosArm64Main by getting {
             dependsOn(nativeMain)
+        }
+    }
+}
+
+tasks {
+    val iosX64Test by creating {
+        onlyIf { Os.isFamily(Os.FAMILY_MAC) }
+
+        val device = project.findProperty("iosDevice")?.toString() ?: "iPhone 8"
+        val testExecutable = kotlin.targets
+                .getByName<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget>("iosX64")
+                .binaries
+                .getTest("DEBUG")
+
+        dependsOn(testExecutable.linkTaskName)
+        group = JavaBasePlugin.VERIFICATION_GROUP
+        description = "Runs tests for target 'ios' on an iOS simulator"
+
+        doLast {
+            exec {
+                commandLine("xcrun", "simctl", "spawn", "--standalone", device, testExecutable.outputFile.absolutePath)
+            }
         }
     }
 }
