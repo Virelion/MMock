@@ -5,6 +5,7 @@ import com.github.virelion.mmock.NoMethodStubException
 import com.github.virelion.mmock.dsl.*
 import com.github.virelion.mmock.samples.ExampleInterface
 import com.github.virelion.mmock.verifyFailed
+import com.github.virelion.mmock.withMMock
 import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals

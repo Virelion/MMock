@@ -36,11 +36,11 @@ class ExampleMock(override val mMockContext: MMockContext): ObjectMock, ExampleI
     }
 
     override suspend fun suspendNoArgsFunction(): Int {
-        return mocks.invoke<Int>("suspendNoArgsFunction")
+        return mocks.invoke("suspendNoArgsFunction")
     }
 
     override suspend fun suspendFunction(arg1: Int): Int {
-        return mocks.invoke<Int>("suspendFunction", arg1)
+        return mocks.invoke("suspendFunction", arg1)
     }
 
     override suspend fun suspendFunctionAny(arg1: Any): Any {

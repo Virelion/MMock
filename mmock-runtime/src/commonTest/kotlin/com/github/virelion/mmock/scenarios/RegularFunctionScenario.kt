@@ -3,6 +3,7 @@ package com.github.virelion.mmock.scenarios
 import com.github.virelion.mmock.MMockStubbingException
 import com.github.virelion.mmock.dsl.*
 import com.github.virelion.mmock.samples.ExampleInterface
+import com.github.virelion.mmock.withMMock
 import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
