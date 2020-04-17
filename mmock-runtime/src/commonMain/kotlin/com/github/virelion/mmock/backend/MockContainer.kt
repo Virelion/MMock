@@ -1,8 +1,8 @@
 package com.github.virelion.mmock.backend
 
 import com.github.virelion.mmock.NoMethodStubException
+import com.github.virelion.mmock.RecordingDoneMarker
 import com.github.virelion.mmock.backend.stack.MethodElement
-import com.github.virelion.mmock.backend.unsafe.defaultInstance
 import com.github.virelion.mmock.dsl.MMockContext
 
 class MockContainer(
@@ -17,7 +17,7 @@ class MockContainer(
         when (context.state) {
             MMockContext.State.RECORDING -> {
                 context.recordingStack?.add(MethodElement(name, objectMock, args))
-                return defaultInstance()
+                throw RecordingDoneMarker()
             }
             MMockContext.State.INVOKING -> {
                 return regular[name]

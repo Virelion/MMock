@@ -63,16 +63,16 @@ class SuspendArgumentMatcherScenarios {
         exampleInterface.suspendFunction(3)
 
         verify {
-            exampleInterface.suspendFunction(eq(1)) called twice
-            exampleInterface.suspendFunction(eq(2)) called once
-            exampleInterface.suspendFunction(eq(3)) called once
-            exampleInterface.suspendFunction(eq(4)) called never
+            invocation { exampleInterface.suspendFunction(eq(1)) } called twice
+            invocation { exampleInterface.suspendFunction(eq(2)) } called once
+            invocation { exampleInterface.suspendFunction(eq(3)) } called once
+            invocation { exampleInterface.suspendFunction(eq(4)) } called never
         }
 
-        verifyFailed { exampleInterface.suspendFunction(eq(1)) called once }
-        verifyFailed { exampleInterface.suspendFunction(eq(2)) called twice }
-        verifyFailed { exampleInterface.suspendFunction(eq(2)) called twice }
-        verifyFailed { exampleInterface.suspendFunction(eq(4)) called once }
+        verifyFailed { invocation { exampleInterface.suspendFunction(eq(1)) } called once }
+        verifyFailed { invocation { exampleInterface.suspendFunction(eq(2)) } called twice }
+        verifyFailed { invocation { exampleInterface.suspendFunction(eq(2)) } called twice }
+        verifyFailed { invocation { exampleInterface.suspendFunction(eq(4)) } called once }
     }
 
     @Test
@@ -88,13 +88,13 @@ class SuspendArgumentMatcherScenarios {
         exampleInterface.suspendFunctionAny(3)
 
         verify {
-            exampleInterface.suspendFunctionAny(any()) called times(4)
+            invocation { exampleInterface.suspendFunctionAny(any()) } called times(4)
         }
 
-        verifyFailed { exampleInterface.suspendFunctionAny(any()) called times(3) }
-        verifyFailed { exampleInterface.suspendFunctionAny(any()) called times(2) }
-        verifyFailed { exampleInterface.suspendFunctionAny(any()) called times(1) }
-        verifyFailed { exampleInterface.suspendFunctionAny(any()) called times(0) }
+        verifyFailed { invocation { exampleInterface.suspendFunctionAny(any()) } called times(3) }
+        verifyFailed { invocation { exampleInterface.suspendFunctionAny(any()) } called times(2) }
+        verifyFailed { invocation { exampleInterface.suspendFunctionAny(any()) } called times(1) }
+        verifyFailed { invocation { exampleInterface.suspendFunctionAny(any()) } called times(0) }
     }
 
     @Test
@@ -112,13 +112,13 @@ class SuspendArgumentMatcherScenarios {
         exampleInterface.suspendFunctionAny(false)
 
         verify {
-            exampleInterface.suspendFunctionAny(instanceOf<Int>()) called times(3)
-            exampleInterface.suspendFunctionAny(instanceOf<String>()) called twice
-            exampleInterface.suspendFunctionAny(instanceOf<Boolean>()) called once
+            invocation { exampleInterface.suspendFunctionAny(instanceOf<Int>()) } called times(3)
+            invocation { exampleInterface.suspendFunctionAny(instanceOf<String>()) } called twice
+            invocation { exampleInterface.suspendFunctionAny(instanceOf<Boolean>()) } called once
         }
-        verifyFailed { exampleInterface.suspendFunctionAny(instanceOf<Int>()) called times(4) }
-        verifyFailed { exampleInterface.suspendFunctionAny(instanceOf<String>()) called once }
-        verifyFailed { exampleInterface.suspendFunctionAny(instanceOf<Boolean>()) called twice }
+        verifyFailed { invocation { exampleInterface.suspendFunctionAny(instanceOf<Int>()) } called times(4) }
+        verifyFailed { invocation { exampleInterface.suspendFunctionAny(instanceOf<String>()) } called once }
+        verifyFailed { invocation { exampleInterface.suspendFunctionAny(instanceOf<Boolean>()) } called twice }
     }
 
     @Test
@@ -153,20 +153,20 @@ class SuspendArgumentMatcherScenarios {
         exampleInterface.suspendMultipleArgs(1, "", false)
 
         verify {
-            exampleInterface.suspendMultipleArgs(any(), any(), any()) called times(5)
-            exampleInterface.suspendMultipleArgs(instanceOf<Int>(), any(), any()) called times(3)
-            exampleInterface.suspendMultipleArgs(instanceOf<String>(), any(), any()) called times(2)
-            exampleInterface.suspendMultipleArgs(instanceOf<String>(), instanceOf<String>(), any()) called once
-            exampleInterface.suspendMultipleArgs(instanceOf<String>(), instanceOf<String>(), instanceOf<String>()) called never
-            exampleInterface.suspendMultipleArgs(any(), any(), eq(false)) called once
+            invocation { exampleInterface.suspendMultipleArgs(any(), any(), any()) } called times(5)
+            invocation { exampleInterface.suspendMultipleArgs(instanceOf<Int>(), any(), any()) } called times(3)
+            invocation { exampleInterface.suspendMultipleArgs(instanceOf<String>(), any(), any()) } called times(2)
+            invocation { exampleInterface.suspendMultipleArgs(instanceOf<String>(), instanceOf<String>(), any()) } called once
+            invocation { exampleInterface.suspendMultipleArgs(instanceOf<String>(), instanceOf<String>(), instanceOf<String>()) } called never
+            invocation { exampleInterface.suspendMultipleArgs(any(), any(), eq(false)) } called once
         }
 
-        verifyFailed { exampleInterface.suspendMultipleArgs(any(), any(), any()) called once }
-        verifyFailed { exampleInterface.suspendMultipleArgs(instanceOf<Int>(), any(), any()) called times(2) }
-        verifyFailed { exampleInterface.suspendMultipleArgs(instanceOf<String>(), any(), any()) called times(3) }
-        verifyFailed { exampleInterface.suspendMultipleArgs(instanceOf<String>(), instanceOf<String>(), any()) called never }
-        verifyFailed { exampleInterface.suspendMultipleArgs(instanceOf<String>(), instanceOf<String>(), instanceOf<String>()) called once }
-        verifyFailed { exampleInterface.suspendMultipleArgs(any(), any(), eq(false)) called never }
+        verifyFailed { invocation { exampleInterface.suspendMultipleArgs(any(), any(), any()) } called once }
+        verifyFailed { invocation { exampleInterface.suspendMultipleArgs(instanceOf<Int>(), any(), any()) } called times(2) }
+        verifyFailed { invocation { exampleInterface.suspendMultipleArgs(instanceOf<String>(), any(), any()) } called times(3) }
+        verifyFailed { invocation { exampleInterface.suspendMultipleArgs(instanceOf<String>(), instanceOf<String>(), any()) } called never }
+        verifyFailed { invocation { exampleInterface.suspendMultipleArgs(instanceOf<String>(), instanceOf<String>(), instanceOf<String>()) } called once }
+        verifyFailed { invocation { exampleInterface.suspendMultipleArgs(any(), any(), eq(false)) } called never }
     }
 
     @Test
@@ -180,12 +180,12 @@ class SuspendArgumentMatcherScenarios {
         assertFailsWith<NoMethodStubException> { exampleInterface.suspendMultipleArgs(0, 0, 0) }
 
         verify {
-            exampleInterface.suspendMultipleArgs(1, 2, 3) called once
-            exampleInterface.suspendMultipleArgs(3, 2, 1) called never
+            invocation { exampleInterface.suspendMultipleArgs(1, 2, 3) } called once
+            invocation { exampleInterface.suspendMultipleArgs(3, 2, 1) } called never
         }
 
-        verifyFailed { exampleInterface.suspendMultipleArgs(1, 2, 3) called never }
-        verifyFailed { exampleInterface.suspendMultipleArgs(3, 2, 1) called once }
+        verifyFailed { invocation { exampleInterface.suspendMultipleArgs(1, 2, 3) } called never }
+        verifyFailed { invocation { exampleInterface.suspendMultipleArgs(3, 2, 1) } called once }
     }
 
     @Test
@@ -199,7 +199,7 @@ class SuspendArgumentMatcherScenarios {
 
         assertFailsWith<MMockRecordingException> {
             verify {
-                exampleInterface.suspendMultipleArgs(any(), 2, 3) called once
+                invocation { exampleInterface.suspendMultipleArgs(any(), 2, 3) } called once
             }
         }
     }

@@ -2,13 +2,12 @@ package com.github.virelion.mmock.backend.unsafe
 
 import com.github.virelion.mmock.backend.runSuspend
 import kotlinx.coroutines.delay
+import kotlin.js.JsName
 import kotlin.test.Test
 
 class DefaultInstanceTest {
     private interface A
     private class B
-    private sealed class C
-    private abstract class D
 
     fun regularFunction(arg: Any) {
         // empty body
@@ -19,6 +18,7 @@ class DefaultInstanceTest {
     }
 
     @Test
+    @JsName("Can_be_created")
     fun `Can be created`() {
         defaultInstance<Boolean>()
         defaultInstance<Int>()
@@ -34,11 +34,10 @@ class DefaultInstanceTest {
         defaultInstance<String>()
         defaultInstance<A>()
         defaultInstance<B>()
-        defaultInstance<C>()
-        defaultInstance<D>()
     }
 
     @Test
+    @JsName("Can_be_passed_into_function")
     fun `Can be passed into function`() {
         regularFunction(defaultInstance<Boolean>())
         regularFunction(defaultInstance<Int>())
@@ -54,11 +53,10 @@ class DefaultInstanceTest {
         regularFunction(defaultInstance<String>())
         regularFunction(defaultInstance<A>())
         regularFunction(defaultInstance<B>())
-        regularFunction(defaultInstance<C>())
-        regularFunction(defaultInstance<D>())
     }
 
     @Test
+    @JsName("Can_be_passed_into_suspend_function")
     fun `Can be passed into suspend function`() = runSuspend {
         suspendFunction(defaultInstance<Boolean>())
         suspendFunction(defaultInstance<Int>())
@@ -74,7 +72,5 @@ class DefaultInstanceTest {
         suspendFunction(defaultInstance<String>())
         suspendFunction(defaultInstance<A>())
         suspendFunction(defaultInstance<B>())
-        suspendFunction(defaultInstance<C>())
-        suspendFunction(defaultInstance<D>())
     }
 }

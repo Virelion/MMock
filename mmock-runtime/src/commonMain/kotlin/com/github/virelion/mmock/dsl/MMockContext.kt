@@ -2,10 +2,14 @@ package com.github.virelion.mmock.dsl
 
 import com.github.virelion.mmock.MMockStubbingException
 import com.github.virelion.mmock.MMockVerificationException
-import com.github.virelion.mmock.backend.*
+import com.github.virelion.mmock.RecordingDoneMarker
+import com.github.virelion.mmock.backend.FunctionMock
+import com.github.virelion.mmock.backend.InvocationLogRecord
+import com.github.virelion.mmock.backend.StubbingContext
 import com.github.virelion.mmock.backend.stack.Invocation
 import com.github.virelion.mmock.backend.stack.MethodElement
 import com.github.virelion.mmock.backend.stack.StackElement
+import com.github.virelion.mmock.backend.verify
 import com.github.virelion.mmock.samples.ExampleInterface
 import com.github.virelion.mmock.samples.ExampleMock
 
@@ -28,7 +32,11 @@ class MMockContext: VerificationContext {
             val finalEventStack = mutableListOf<StackElement>()
             recordingStack = finalEventStack
             println("PRE - block")
-            block()
+            try {
+                block()
+            } catch (e: RecordingDoneMarker) {
+
+            }
             println("POST - block")
             recordingStack = null
 
