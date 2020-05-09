@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("com.github.virelion.mmock:mmock-gradle-plugin:0.0.1-SNAPSHOT")
+        classpath("com.github.virelion.mmock:mmock-gradle-plugin:0.0.0-SNAPSHOT")
     }
 }
 
@@ -21,15 +21,21 @@ repositories {
     jcenter()
 }
 
+val mmockRuntimeVersion = "0.0.0-SNAPSHOT"
+
 kotlin {
     jvm()
     js {
         nodejs {
-            testTask { }
+            testTask {
+                useMocha()
+            }
         }
     }
     mingwX64()
-    mingwX86()
+    macosX64()
+    linuxX64()
+    ios()
 
     sourceSets {
         val commonMain by getting {
@@ -37,7 +43,7 @@ kotlin {
                 implementation(project(":sub-module"))
 
                 implementation(kotlin("stdlib-common"))
-                implementation("com.github.virelion.mmock:mmock-runtime:0.0.1-SNAPSHOT")
+                implementation("com.github.virelion.mmock:mmock-runtime:$mmockRuntimeVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.5")
             }
         }
@@ -54,7 +60,7 @@ kotlin {
                 implementation(kotlin("stdlib-jdk8"))
                 implementation(kotlin("reflect"))
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5")
-                implementation("com.github.virelion.mmock:mmock-runtime-jvm:0.0.1-SNAPSHOT")
+//                implementation("com.github.virelion.mmock:mmock-runtime-jvm:$mmockRuntimeVersion")
             }
         }
 
@@ -68,7 +74,7 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.5")
-                implementation("com.github.virelion.mmock:mmock-runtime-js:0.0.1-SNAPSHOT")
+//                implementation("com.github.virelion.mmock:mmock-runtime-js:$mmockRuntimeVersion")
             }
         }
 
@@ -84,17 +90,38 @@ kotlin {
             }
         }
 
-        val mingwX64Main by getting {
+        val linuxX64Main by getting {
             dependsOn(nativeMain)
             dependencies {
-                implementation("com.github.virelion.mmock:mmock-runtime-mingwx64:0.0.1-SNAPSHOT")
+//                implementation("com.github.virelion.mmock:mmock-runtime-linuxx64:$mmockRuntimeVersion")
             }
         }
 
-        val mingwX86Main by getting {
+        val macosX64Main by getting {
             dependsOn(nativeMain)
             dependencies {
-                implementation("com.github.virelion.mmock:mmock-runtime-mingwx86:0.0.1-SNAPSHOT")
+//                implementation("com.github.virelion.mmock:mmock-runtime-macosx64:$mmockRuntimeVersion")
+            }
+        }
+
+        val iosX64Main by getting {
+            dependsOn(nativeMain)
+            dependencies {
+//                implementation("com.github.virelion.mmock:mmock-runtime-iosx64:$mmockRuntimeVersion")
+            }
+        }
+
+        val iosArm64Main by getting {
+            dependsOn(nativeMain)
+            dependencies {
+//                implementation("com.github.virelion.mmock:mmock-runtime-iosarm64:$mmockRuntimeVersion")
+            }
+        }
+
+        val mingwX64Main by getting {
+            dependsOn(nativeMain)
+            dependencies {
+//                implementation("com.github.virelion.mmock:mmock-runtime-mingwx64:$mmockRuntimeVersion")
             }
         }
     }

@@ -1,4 +1,4 @@
-rootProject.name = "mmock"
+rootProject.name = "demo-project"
 
 include(":sub-module")
 

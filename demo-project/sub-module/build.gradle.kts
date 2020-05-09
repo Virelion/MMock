@@ -16,7 +16,9 @@ kotlin {
         }
     }
     mingwX64()
-    mingwX86()
+    macosX64()
+    linuxX64()
+    ios()
 
     sourceSets {
         val commonMain by getting {
@@ -59,14 +61,6 @@ kotlin {
         val nativeMain by creating {
             dependencies {
             }
-        }
-
-        val mingwX64Main by getting {
-            dependsOn(nativeMain)
-        }
-
-        val mingwX86Main by getting {
-            dependsOn(nativeMain)
         }
     }
 }

@@ -21,9 +21,9 @@ class MockClassCodeTemplateTest {
                 pkg = "my.test",
                 originalName = "TestClass",
                 imports = listOf("test.Test"),
-                methods = listOf(methodSource)
+                methods = listOf(methodSource),
+                typeParameters = listOf()
         )
-
 
         assertCodeEquals(
                 """
